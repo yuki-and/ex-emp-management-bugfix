@@ -60,6 +60,7 @@ public class AdministratorController {
 	public String toInsert() {
 		return "administrator/insert";
 	}
+	
 
 	/**
 	 * 管理者情報を登録します.
@@ -72,13 +73,13 @@ public class AdministratorController {
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 		if(administratorService.findByEmailAddress(form.getMailAddress()) != null) {
 			result.rejectValue("mailAddress", null, "既に利用されているメールアドレスです");
-			return toInsert();
-		}
-		if(result.hasErrors()) {
-			return toInsert();
+//			return toInsert();
 		}
 		if(form.getPassword() != form.getPasswordConfirmation()) {
 			result.rejectValue("passwordConfirmation", null, "パスワードが一致しません");
+//			return toInsert();
+		}
+		if(result.hasErrors()) {
 			return toInsert();
 		}
 		
@@ -118,7 +119,7 @@ public class AdministratorController {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
 		}
-		session.setAttribute("administrator", administrator);
+		session.setAttribute("name", administrator.getName());
 		return "forward:/employee/showList";
 	}
 	
