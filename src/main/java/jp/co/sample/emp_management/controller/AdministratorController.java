@@ -77,6 +77,10 @@ public class AdministratorController {
 		if(result.hasErrors()) {
 			return toInsert();
 		}
+		if(form.getPassword() != form.getPasswordConfirmation()) {
+			result.rejectValue("passwordConfirmation", null, "パスワードが一致しません");
+			return toInsert();
+		}
 		
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
